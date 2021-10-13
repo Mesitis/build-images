@@ -23,12 +23,19 @@ case $IMAGE_TO_BUILD in
 
   python)
     ecr_login
-    for python_version in "3.7.12" "3.8.12" "3.9.7"; do
-      IMAGE_TAG="public.ecr.aws/canopy/builder:$python_version"
+
+    function build_python_version() {
+      IMAGE_TAG="public.ecr.aws/canopy/builder:$1"
       echo "Building $IMAGE_TAG"
-      docker build --build-arg "PYTHON_VERSION=$python_version" -t "$IMAGE_TAG"
+      docker build --build-arg "PYTHON_VERSION=$1" -t "$IMAGE_TAG"
       docker push "$IMAGE_TAG"
+    }
+
+    for python_version in "3.7.12" "3.8.12" "3.9.7"; do
+      build_python_version $python_version &
     done
+
+    wait
     ;;
 
   *)
