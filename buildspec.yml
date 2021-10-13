@@ -1,0 +1,21 @@
+version: 0.2
+
+batch:
+  fast-fail: true
+  build-graph:
+    - identifier: base
+      env:
+        variables:
+          IMAGE_TO_BUILD: base
+      ignore-failure: false
+    - identifier: python
+      env:
+        variables:
+          IMAGE_TO_BUILD: python
+      depend-on:
+        - base
+
+phases:
+  build:
+    commands:
+      - bash build.sh
