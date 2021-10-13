@@ -3,7 +3,7 @@ FROM public.ecr.aws/canopy/builder:base
 ARG PYTHON_VERSION=3.9.7
 
 ENV POETRY_VERSION="1.1.11" \
-    POETRY_URL="https://raw.githubusercontent.com/python-poetry/poetry/$POETRY_VERSION/get-poetry.py" \
+    POETRY_URL="https://raw.githubusercontent.com/python-poetry/poetry/1.1.11/get-poetry.py" \
     POETRY_SHA1SUM="eedf0fe5a31e5bb899efa581cbe4df59af02ea5f" \
     # Pyenv for python-build
     PYENV_URL="https://github.com/pyenv/pyenv/archive/refs/tags/v2.1.0.zip" \
