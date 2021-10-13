@@ -1,8 +1,11 @@
+FROM busybox:1.33.1 as busybox
+
+
 FROM buildpack-deps:buster-curl as builder
 
 ENV APT_DEPENDENCIES="build-essential zlib1g-dev git libpopt-dev unzip libarchive-tools make libssl-dev \
     libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev" \
+    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev file" \
     #
     # dumb-init
     #
@@ -24,3 +27,5 @@ WORKDIR /tmp/builder
 COPY . .
 RUN bash /tmp/builder/build.sh \
     && rm -rf /tmp/*
+
+COPY --from=busybox /bin/busybox /opt/bin/busybox
