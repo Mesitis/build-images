@@ -2,11 +2,20 @@
 set -e
 
 function ecr_login() {
-    aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/canopy
+  aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/canopy
 }
 
 function dockerhub_login() {
-    echo "$DOCKER_HUB_TOKEN" | docker login --username "$DOCKER_HUB_USERNAME" --password-stdin
+  echo "$DOCKER_HUB_TOKEN" | docker login --username "$DOCKER_HUB_USERNAME" --password-stdin
+}
+
+# build_and_push <name> <version>
+function build_and_push() {
+  IMAGE_TAG="public.ecr.aws/canopy/builder:$1-$2"
+  BUILD_ARG="${1^^}_VERSION=$2"
+  echo "Building $IMAGE_TAG with build-arg $BUILD_ARG"
+  docker build --build-arg "$BUILD_ARG" -t "$IMAGE_TAG" .
+  docker push "$IMAGE_TAG"
 }
 
 pushd "$IMAGE_TO_BUILD"
@@ -24,15 +33,8 @@ case $IMAGE_TO_BUILD in
   python)
     ecr_login
 
-    function build_python_version() {
-      IMAGE_TAG="public.ecr.aws/canopy/builder:$1"
-      echo "Building $IMAGE_TAG"
-      docker build --build-arg "PYTHON_VERSION=$1" -t "$IMAGE_TAG"
-      docker push "$IMAGE_TAG"
-    }
-
     for python_version in "3.7.12" "3.8.12" "3.9.7"; do
-      build_python_version $python_version &
+      build_and_push python $python_version &
     done
 
     wait
