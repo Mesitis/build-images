@@ -14,6 +14,12 @@ batch:
           IMAGE_TO_BUILD: python
       depend-on:
         - base
+    - identifier: ruby
+      env:
+        variables:
+          IMAGE_TO_BUILD: ruby
+      depend-on:
+        - base
 
 phases:
   build:
