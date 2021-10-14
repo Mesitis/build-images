@@ -2,14 +2,13 @@ FROM gcr.io/distroless/python3-debian10 as distroless
 
 FROM public.ecr.aws/canopy/builder:base
 
-ARG PYTHON_VERSION=3.9.7
+ARG PYTHON_VERSION="3.9.7 77bc6157968a2e7a19af8479a3b92b67953ca25d"
 
 ENV POETRY_VERSION="1.1.11" \
     POETRY_URL="https://raw.githubusercontent.com/python-poetry/poetry/1.1.11/get-poetry.py" \
     POETRY_SHA1SUM="eedf0fe5a31e5bb899efa581cbe4df59af02ea5f" \
-    # Standalone CPython
-    CPYTHON_URL="https://github.com/indygreg/python-build-standalone/releases/download/20211012/cpython-$PYTHON_VERSION-x86_64-unknown-linux-gnu-pgo-20211011T1926.tar.zst" \
-    CPYTHON_SHA1SUM="77bc6157968a2e7a19af8479a3b92b67953ca25d"\
+    # CPython standalone
+    CPYTHON_URL="https://github.com/indygreg/python-build-standalone/releases/download/20211012/cpython-\$PYTHON_VERSION-x86_64-unknown-linux-gnu-pgo-20211011T1926.tar.zst" \
     # Python version
     PYTHON_VERSION=$PYTHON_VERSION
 

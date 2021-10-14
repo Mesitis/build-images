@@ -11,7 +11,9 @@ function dockerhub_login() {
 
 # build_and_push <name> <version>
 function build_and_push() {
-  IMAGE_TAG="public.ecr.aws/canopy/builder:$1-$2"
+  # shellcheck disable=SC2206
+  VERSION_SPLIT=($2)
+  IMAGE_TAG="public.ecr.aws/canopy/builder:$1-${VERSION_SPLIT[0]}"
   BUILD_ARG="${1^^}_VERSION=$2"
   echo "Building $IMAGE_TAG with build-arg $BUILD_ARG"
   docker build --build-arg "$BUILD_ARG" -t "$IMAGE_TAG" .
@@ -33,8 +35,8 @@ case $IMAGE_TO_BUILD in
   python)
     ecr_login
 
-    for python_version in "3.8.12" "3.9.7" "3.10.0"; do
-      build_and_push python $python_version &
+    for python_version in "3.8.12 805d214af8dcb694f85aed5bac0d3dfe2cdb0d1f" "3.9.7 77bc6157968a2e7a19af8479a3b92b67953ca25d" "3.10.0 d5da150eaa07194e8fe027d3fafd829f192c5fbc"; do
+      build_and_push python "$python_version" &
     done
     wait
     ;;
