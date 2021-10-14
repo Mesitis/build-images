@@ -14,7 +14,7 @@ function build_and_push() {
   IMAGE_TAG="public.ecr.aws/canopy/builder:$1-$2"
   BUILD_ARG="${1^^}_VERSION=$2"
   echo "Building $IMAGE_TAG with build-arg $BUILD_ARG"
-  docker build --build-arg "$BUILD_ARG" -t "$IMAGE_TAG" --squash .
+  docker build --build-arg "$BUILD_ARG" -t "$IMAGE_TAG" .
   docker push "$IMAGE_TAG"
 }
 
@@ -24,7 +24,7 @@ case $IMAGE_TO_BUILD in
     dockerhub_login
     IMAGE_TAG="public.ecr.aws/canopy/builder:base"
     echo "Building $IMAGE_TAG"
-    docker build -t "$IMAGE_TAG" --squash .
+    docker build -t "$IMAGE_TAG" .
 
     ecr_login
     docker push "$IMAGE_TAG"

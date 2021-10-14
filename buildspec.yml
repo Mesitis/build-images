@@ -24,8 +24,4 @@ batch:
 phases:
   build:
     commands:
-      - kill $(cat /var/run/docker.pid)
-      - while kill -0 $(cat /var/run/docker.pid) ; do sleep 1 ; done
-      - "nohup /usr/local/bin/dockerd --experimental --bip '192.168.242.1/24' --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &"
-      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
       - bash build.sh
