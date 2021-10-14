@@ -1,3 +1,5 @@
+FROM gcr.io/distroless/python3-debian10 as distroless
+
 FROM public.ecr.aws/canopy/builder:base
 
 ARG PYTHON_VERSION=3.9.7
@@ -21,7 +23,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DEFAULT_TIMEOUT=100 \
     \
     # poetry
-    POETRY_HOME="/opt/poetry" \
+    POETRY_HOME="/build/poetry" \
     # make poetry create the virtual environment in the project's root
     # it gets named `.venv`
     POETRY_VIRTUALENVS_IN_PROJECT=true \
@@ -36,5 +38,15 @@ ENV VENV_PATH="$PYSETUP_PATH/.venv" \
 
 WORKDIR /tmp/builder
 COPY . .
+COPY --from=distroless /etc /opt/root/etc
+COPY --from=distroless /lib /opt/root/lib
+COPY --from=distroless /sbin /opt/root/sbin
+COPY --from=distroless /lib64 /opt/root/lib64
+COPY --from=distroless /usr/bin /opt/root/usr/bin
+COPY --from=distroless /usr/sbin /opt/root/usr/sbin
+COPY --from=distroless /usr/share /opt/root/usr/share
+COPY --from=distroless /usr/lib/x86_64-linux-gnu /opt/root/usr/lib/x86_64-linux-gnu
+COPY --from=distroless /usr/lib/locale /opt/root/usr/lib/locale
+
 RUN bash /tmp/builder/build.sh \
     && rm -rf /tmp/*
