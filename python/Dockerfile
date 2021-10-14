@@ -31,7 +31,7 @@ ENV PYTHONUNBUFFERED=1 \
     # this is where our requirements + virtual environment will live
     PYSETUP_PATH="/opt/pysetup" \
     VENV_PATH="/opt/pysetup/.venv" \
-    PATH="/opt/python/bin:$PATH"
+    PATH="/opt/poetry/bin:/opt/python/bin:$PATH"
 
 WORKDIR /tmp/builder
 COPY . .
