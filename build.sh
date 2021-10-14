@@ -33,7 +33,7 @@ case $IMAGE_TO_BUILD in
   python)
     ecr_login
 
-    for python_version in "3.7.12" "3.8.12" "3.9.7"; do
+    for python_version in "3.8.12" "3.9.7" "3.10.0"; do
       build_and_push python $python_version &
     done
     wait

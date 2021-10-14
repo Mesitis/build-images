@@ -7,9 +7,9 @@ ARG PYTHON_VERSION=3.9.7
 ENV POETRY_VERSION="1.1.11" \
     POETRY_URL="https://raw.githubusercontent.com/python-poetry/poetry/1.1.11/get-poetry.py" \
     POETRY_SHA1SUM="eedf0fe5a31e5bb899efa581cbe4df59af02ea5f" \
-    # Pyenv for python-build
-    PYENV_URL="https://github.com/pyenv/pyenv/archive/refs/tags/v2.1.0.zip" \
-    PYENV_SHA1SUM="065476e9634a60adf944359b40a4c6e82a55bae7"\
+    # Standalone CPython
+    CPYTHON_URL="https://github.com/indygreg/python-build-standalone/releases/download/20211012/cpython-$PYTHON_VERSION-x86_64-unknown-linux-gnu-pgo-20211011T1926.tar.zst" \
+    CPYTHON_SHA1SUM="77bc6157968a2e7a19af8479a3b92b67953ca25d"\
     # Python version
     PYTHON_VERSION=$PYTHON_VERSION
 
@@ -34,19 +34,10 @@ ENV PYTHONUNBUFFERED=1 \
     PYSETUP_PATH="/opt/pysetup"
 
 ENV VENV_PATH="$PYSETUP_PATH/.venv" \
-    PATH="$POETRY_HOME/bin:/opt/python/bin:$PATH"
+    PATH="$POETRY_HOME/bin:/opt/python/install/bin:$PATH"
 
 WORKDIR /tmp/builder
 COPY . .
-COPY --from=distroless /etc /opt/root/etc
-COPY --from=distroless /lib /opt/root/lib
-COPY --from=distroless /sbin /opt/root/sbin
-COPY --from=distroless /lib64 /opt/root/lib64
-COPY --from=distroless /usr/bin /opt/root/usr/bin
-COPY --from=distroless /usr/sbin /opt/root/usr/sbin
-COPY --from=distroless /usr/share /opt/root/usr/share
-COPY --from=distroless /usr/lib/x86_64-linux-gnu /opt/root/usr/lib/x86_64-linux-gnu
-COPY --from=distroless /usr/lib/locale /opt/root/usr/lib/locale
 
 RUN bash /tmp/builder/build.sh \
     && rm -rf /tmp/*

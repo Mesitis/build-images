@@ -5,7 +5,7 @@ FROM buildpack-deps:buster-curl as builder
 
 ENV APT_DEPENDENCIES="build-essential zlib1g-dev git libpopt-dev unzip libarchive-tools make libssl-dev \
     libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev file" \
+    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev file zstd" \
     #
     # dumb-init
     #

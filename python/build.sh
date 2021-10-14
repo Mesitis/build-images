@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-curl -fsSLo pyenv.zip "${PYENV_URL}"
-echo "${PYENV_SHA1SUM} pyenv.zip" | sha1sum -c -
-mkdir pyenv
-bsdtar -xJf pyenv.zip -C pyenv --strip-components=1
+curl -fsSLo cpython.tar.zst "${CPYTHON_URL}"
+echo "${CPYTHON_SHA1SUM} cpython.tar.zst" | sha1sum -c -
+mkdir /opt/python
+tar -xvf cpython.tar.zst -C /opt/python --strip-components=1 --use-compress-program=zstd
+ln -s /opt/python/install/bin/python3 /opt/python/install/bin/python
 
-pushd pyenv/plugins/python-build
-./install.sh
-popd
-python-build $PYTHON_VERSION /opt/python
-
+mkdir -p /build/poetry
 curl -fsSLo get-poetry.py "${POETRY_URL}"
 echo "${POETRY_SHA1SUM} get-poetry.py" | sha1sum -c -
 python get-poetry.py
