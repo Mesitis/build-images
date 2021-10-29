@@ -1,5 +1,3 @@
-FROM gcr.io/distroless/python3-debian10 as distroless
-
 FROM public.ecr.aws/canopy/builder:base
 
 ARG PYTHON_VERSION="3.9.7 77bc6157968a2e7a19af8479a3b92b67953ca25d"

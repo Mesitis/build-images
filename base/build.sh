@@ -9,11 +9,10 @@ apt-get install --no-install-recommends -yq $APT_DEPENDENCIES
 
 mkdir -p /opt/bin
 
-echo "Downloading and verifying dumb-init from $DUMB_INIT_URL"
-curl -fsSLo dumb-init "$DUMB_INIT_URL"
-echo "${DUMB_INIT_SHA1SUM} dumb-init" | sha1sum -c -
-chmod +x dumb-init
-mv dumb-init /opt/bin/
+echo "Downloading and verifying s6-overlay from $S6_OVERLAY_URL"
+curl -fsSLo s6-overlay.tar.gz "$S6_OVERLAY_URL"
+echo "${S6_OVERLAY_SHA1SUM} s6-overlay.tar.gz" | sha1sum -c -
+mv s6-overlay.tar.gz /opt/install/s6-overlay.tar.gz
 
 echo "Downloading and verifying supercronic from $SUPERCRONIC_URL"
 curl -fsSLo supercronic "$SUPERCRONIC_URL"

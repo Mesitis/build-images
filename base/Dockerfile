@@ -7,10 +7,10 @@ ENV APT_DEPENDENCIES="build-essential zlib1g-dev git libpopt-dev unzip libarchiv
     libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
     libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev file zstd gettext" \
     #
-    # dumb-init
+    # S6 Overlay
     #
-    DUMB_INIT_URL="https://github.com/Yelp/dumb-init/releases/download/v1.2.4/dumb-init_1.2.4_x86_64" \
-    DUMB_INIT_SHA1SUM="afa57402a13533119d8895ca97245bb042ffe27e" \
+    S6_OVERLAY_URL="https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-amd64.tar.gz" \
+    S6_OVERLAY_SHA1SUM="26076034def39e7256de128edb3fae53559a2af6" \
     #
     # supercronic
     #
